@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>File Sharing Tool - Upload</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="container">
+    <h1>Upload File</h1>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="messages">
+                {% for category, message in messages %}
+                    <div class="message {{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form id="upload-form" action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+        <label for="file">Choose File</label>
+        <input type="file" id="file" name="file" required>
+
+        <label for="password">Optional Password</label>
+        <input type="password" id="password" name="password" placeholder="Leave blank for no password">
+
+        <div class="note">Maximum file size: 1 GB</div>
+
+        <button type="submit">Upload</button>
+
+        <div id="progress-container" class="progress-container hidden">
+            <div id="progress-bar" class="progress-bar"></div>
+        </div>
+        <div id="progress-text" class="progress-text hidden">0%</div>
+    </form>
+</div>
+
+<script src="{{ url_for('static', filename='upload.js') }}"></script>
+</body>
+</html>
+
